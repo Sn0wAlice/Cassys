@@ -2,9 +2,19 @@ import { DNSServer, ARecord, AAAARecord, CNAMERecord, MXRecord, NSRecord, SOARec
 import { welcome } from "./utils/welcome.ts";
 welcome()
 
+import { PrintConfs } from "./utils/printConfs.ts";
 import { MakeAResponse } from "./record/a.ts";
 
 const _MakeAResponse = new MakeAResponse()
+const _PrintConfs = new PrintConfs()
+
+async function MakeRecord() {
+  let records = []
+  for(let i=0; i<record.length; i++) {
+    records.push(record[i].url)
+  }
+  return records
+}
 
 //See exemple in ./Demame/test.ts
 const server = new DNSServer({
@@ -25,26 +35,17 @@ exemple of record
 }
 */
 
-server.on("listen", () => {
-  console.log("Listening ~");
-});
 
 let record = JSON.parse(Deno.readTextFileSync("config.json"))
 let recordName = await MakeRecord()
-
-async function MakeRecord() {
-  let records = []
-  for(let i=0; i<record.length; i++) {
-    records.push(record[i].url)
-    console.log(`Added to the record list: ${record[i].url}`)
-  }
-  return records
-}
+await _PrintConfs.printConfs(record)
 
 
+server.on("listen", () => {
+  console.log("\nListening ~");
+});
 
 server.listen({ port: 6969, script: async function main(query, thisServer) {
-
   try{
     if(recordName.includes(query.name)) {
       if(query.type == "A"){
@@ -54,7 +55,6 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
     } else {
       console.log(`No record for the query: ${query.name}`)
     }
-    
   } catch(e) {
     console.log(e)
   }

@@ -2,39 +2,43 @@
     {
         "url": "pc.me",
         "type": "A",
-        "target": "0.0.0.0",
+        "target": "17.0.0.1",
 
         "bannedIP": [],
         "bannedIpTarget": "6.0.0.0",
 
         "IsMultipleTargetIP": true,
-        "IP_multipleTargetDefalt": "127.0.0.1",
+        "IP_multipleTargetDefalt": "17.0.0.1",
         "IP_multipleTarget": [
             {
+                "solo": false,
                 "startA": 0,
                 "startB": 0,
                 "startC": 0,
                 "startD": 0,
-                "endA": 255,
+                "endA": 155,
                 "endB": 255,
                 "endC": 255,
                 "endD": 255,
-                "solo": false,
-                "soloTarget": "127.1.0.0",
-                "target": "127.0.0.1"      
+                "target": "17.0.1.0"      
+            },
+            {
+                 "solo": true,
+                 "soloIp": ["1.2.3.4"],
+                 "soloTarget": "17.0.1.1"
             }
         ],
 
         "IsMultipleTargetCOUNTRY": true,
-        "COUNTRY_multipleTargetDefalt": "127.0.0.1",
+        "COUNTRY_multipleTargetDefalt": "17.0.0.1",
         "COUNTRY_multipleTarget": [
             {
-                "startA": "Frace",
-                "target": "127.0.0.3"      
+                "country": ["France"],
+                "target": "17.0.3.1"      
             }
         ],
 
-        "HackerMode": true,
+        "HackerMode": false,
         "HackerMode_targetDefalt": "27.0.0.0",
         "DNS_rebinding": true
 
