@@ -1,4 +1,4 @@
-# Cassys
+# Cassys <img src="./img/blackcurrant.png" height="50">
 
 ```
      .ooooo.   .oooo.   .oooo.o  .oooo.o oooo    ooo  .oooo.o 
@@ -9,6 +9,7 @@
                                           .o..P'               
                                           `Y8P'
 ```
+
 
 - Not Working yet, please WAIT
 
