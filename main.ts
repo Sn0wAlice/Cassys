@@ -1,10 +1,12 @@
 import { DNSServer, ARecord, AAAARecord, CNAMERecord, MXRecord, NSRecord, SOARecord, SRVRecord, TXTRecord} from "./dnsServ/mod.ts";
 import { welcome } from "./utils/welcome.ts";
+import { TorNodes } from "./utils/torNodes.ts";
 welcome()
 
 import { PrintConfs } from "./utils/printConfs.ts";
 import { MakeAResponse } from "./record/a.ts";
 
+const _TorNodes = new TorNodes()
 const _MakeAResponse = new MakeAResponse()
 const _PrintConfs = new PrintConfs()
 
@@ -40,6 +42,9 @@ let record = JSON.parse(Deno.readTextFileSync("config.json"))
 let recordName = await MakeRecord()
 await _PrintConfs.printConfs(record)
 
+await _TorNodes.dlTorNodes()
+
+let TorNodesArray = Deno.readTextFileSync("./utils/torNodes.txt").split('\n')
 
 server.on("listen", () => {
   console.log("\nListening ~");
@@ -48,6 +53,12 @@ server.on("listen", () => {
 server.listen({ port: 6969, script: async function main(query, thisServer) {
   try{
     if(recordName.includes(query.name)) {
+      if(TorNodesArray.includes(query._client.hostname)) {
+        query.ontor = true
+      } else {
+        query.ontor = false
+      }
+
       if(query.type == "A"){
         let target = await _MakeAResponse.make(query, record[recordName.indexOf(query.name)])
         thisServer.records[query.name] = [{record: new ARecord(target) }]

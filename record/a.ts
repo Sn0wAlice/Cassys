@@ -19,6 +19,13 @@ export class MakeAResponse {
             end = block = true
         }
 
+        // Check if IP is Tode node
+        if(query.ontor && query.TorUserRedirect && query.TorRedirectTarget != undefined){
+            console.log(`[${query._client.hostname}] is TOR NetWork`)
+            target = query.TorRedirectTarget
+            end = block = true
+        }
+
         // Check If Hacker Mode
         if(record.hackerMode && !end && !block){
             console.log(`[${query._client.hostname}] pass by '${query.name}' MODE: [HACKING]`)

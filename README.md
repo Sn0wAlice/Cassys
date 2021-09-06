@@ -64,7 +64,10 @@ Banned IP Will bypass ALL the filter :) *Logic*
 
      "HackerMode": true, // If Hacker Mode DNS *Required*
      "HackerMode_targetDefalt": "27.0.0.0", //defalt HACKER mode ip
-     "DNS_rebinding": true //Ennable DNS rebinding for this domain
+     "DNS_rebinding": true, //Ennable DNS rebinding for this domain
+
+     "TorUserRedirect": true, // If user use tor network
+     "TorRedirectTarget": "6.6.6.6" // Target for the tor network user
 }
 ```
 
