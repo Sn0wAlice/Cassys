@@ -53,16 +53,23 @@ server.on("listen", () => {
 server.listen({ port: 6969, script: async function main(query, thisServer) {
   try{
     if(recordName.includes(query.name)) {
+      
       if(TorNodesArray.includes(query._client.hostname)) {
         query.ontor = true
       } else {
         query.ontor = false
       }
 
-      if(query.type == "A"){
-        let target = await _MakeAResponse.make(query, record[recordName.indexOf(query.name)])
-        thisServer.records[query.name] = [{record: new ARecord(target) }]
+      if(query.ontor && record[recordName.indexOf(query.name)].TorUserBanned) {
+        //not allowed
+      } else {
+        if(query.type == "A"){
+          let target = await _MakeAResponse.make(query, record[recordName.indexOf(query.name)])
+          thisServer.records[query.name] = [{record: new ARecord(target) }]
+        }
       }
+
+      
     } else {
       console.log(`No record for the query: ${query.name}`)
     }

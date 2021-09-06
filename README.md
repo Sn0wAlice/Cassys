@@ -67,6 +67,7 @@ Banned IP Will bypass ALL the filter :) *Logic*
      "DNS_rebinding": true, //Ennable DNS rebinding for this domain
 
      "TorUserRedirect": true, // If user use tor network
+     "TorUserBanned": false, // Ban tor user
      "TorRedirectTarget": "6.6.6.6" // Target for the tor network user
 }
 ```

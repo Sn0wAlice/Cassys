@@ -43,6 +43,7 @@
         "DNS_rebinding": true,
 
         "TorUserRedirect": true,
+        "TorUserBanned": false,
         "TorRedirectTarget": "6.6.6.6"
     }
 ]
