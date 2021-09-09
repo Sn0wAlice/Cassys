@@ -75,11 +75,14 @@ Banned IP Will bypass ALL the filter :) *Logic*
 - SRV `no-work`
 - TXT `beta`
 
+## Args
+
+- `--countryForce`
+     - Force user to pass by country restriction
+
 # TODO
 
 - Detect IPV4 - IPV6 for ip restriction
-
-- AAAA range calc
-- AAAA record response error
+- IP country caches
 
 - DNS analyse to detect Other DNS serveur on the private network

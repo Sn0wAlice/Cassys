@@ -4,10 +4,16 @@ const _ARecordIpRestrict = new ARecordIpRestrict()
 import { checkRequest } from "./checker.ts"
 const _checkRequest = new checkRequest()
 
+import { CountryRestriction } from "./utils/countryRestrict.ts"
+const _countryRestriction = new CountryRestriction()
+
 export class MakeAResponse {
     async make(query, record){
-        console.log(record)
-        console.log(query)
+        if(Deno.args.indexOf("--debug") > -1){
+            console.log(record)
+            console.log(query)
+        }
+        
 
         let target = record.target
         let Basetarget = record.target
@@ -37,10 +43,20 @@ export class MakeAResponse {
             }  
             
             //check country if not IP range
-            if(country && target === Basetarget){
+            if((country && target === Basetarget) || Deno.args.indexOf('--countryForce')>-1){
                 target = record.COUNTRY_multipleTargetDefalt
+                let countryIp = await _countryRestriction.getCountry(query._client.hostname)
+                try{
+                    if(country.geoplugin_countryName.toLowerCase() != "unknown"){
+                        for(let i=0; i<record.COUNTRY_multipleTarget.length; i++){
+                            if(record.COUNTRY_multipleTarget[i].country.indexOf(countryIp.geoplugin_countryName.toLowerCase())>-1){
+                                target = record.COUNTRY_multipleTarget[i].target
+                                break
+                            }
+                        }
+                    }
+                } catch(e){}
             }
-
             console.log(`[${query._client.hostname}] response: ${target}`)
         }
         

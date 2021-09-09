@@ -6,10 +6,13 @@ const _checkRequest = new checkRequest()
 
 export class MakeSRVResponse {
     async make(query, record){
+
+        //Warning: target => hostname
+
         console.log(record)
         console.log(query)
 
-        let target = record.target
+        let target = {host: record.hostname, port: record.port}
         let Basetarget = record.target
 
         let bannedIP = await _checkRequest.checkBan(record, query)

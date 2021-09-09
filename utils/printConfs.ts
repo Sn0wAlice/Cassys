@@ -1,9 +1,21 @@
 export class PrintConfs {
     async printConfs(record) {
+        //Print general confs
+        await this.showArgsConfg()
+        //Print User conf
         for(let i=0; i<record.length; i++) {
             if(record[i].type == "A") {
                 this.showAConf(record[i]);
             }
+        }
+    }
+
+    async showArgsConfg(){
+        if(Deno.args.indexOf("--debug") > -1){
+            console.log("~ [ARGS] - '--cdebug' - debug mode on")
+        }
+        if(Deno.args.indexOf("--countryForce")>-1) {
+            console.log("~ [ARGS] - '--countryForce' - force country mode")
         }
     }
 

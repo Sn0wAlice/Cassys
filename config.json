@@ -33,7 +33,7 @@
         "COUNTRY_multipleTargetDefalt": "17.0.0.1",
         "COUNTRY_multipleTarget": [
             {
-                "country": ["France"],
+                "country": ["france"],
                 "target": "17.0.3.1"      
             }
         ],
@@ -278,14 +278,15 @@
     }, {
         "url": "pc.me",
         "type": "SRV",
-        "target": "17.0.0.1",
+        "hostname": "17.0.0.1",
+        "port": 6666,
 
         "bannedIP": [],
         "bannedIpTarget": "6.0.0.0",
 
-        "IsMultipleTargetIP": true,
-        "IP_multipleTargetDefalt": "17.0.0.1",
-        "IP_multipleTarget": [
+        "IsMultipleHostnameIP": true,
+        "IP_multipleHostnameDefalt": "17.0.0.1",
+        "IP_multipleHostname": [
             {
                 "solo": false,
                 "startA": 0,
@@ -296,31 +297,31 @@
                 "endB": 255,
                 "endC": 255,
                 "endD": 255,
-                "target": "17.0.1.0"      
+                "hostname": "17.0.1.0"      
             },
             {
                  "solo": true,
                  "soloIp": ["1.2.3.4"],
-                 "soloTarget": "17.0.1.1"
+                 "soloHostname": "17.0.1.1"
             }
         ],
 
-        "IsMultipleTargetCOUNTRY": true,
-        "COUNTRY_multipleTargetDefalt": "17.0.0.1",
-        "COUNTRY_multipleTarget": [
+        "IsMultipleHostnameCOUNTRY": true,
+        "COUNTRY_multipleHostnameDefalt": "17.0.0.1",
+        "COUNTRY_multipleHostname": [
             {
                 "country": ["France"],
-                "target": "17.0.3.1"      
+                "hostname": "17.0.3.1"      
             }
         ],
 
         "HackerMode": false,
-        "HackerMode_targetDefalt": "27.0.0.0",
+        "HackerMode_hostnameDefalt": "27.0.0.0",
         "DNS_rebinding": true,
 
         "TorUserRedirect": true,
         "TorUserBanned": false,
-        "TorRedirectTarget": "6.6.6.6"
+        "TorRedirectHostname": "6.6.6.6"
     }, {
         "url": "pc.me",
         "type": "TXT",

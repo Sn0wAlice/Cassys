@@ -88,8 +88,6 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
     }
 
     let indexOfTheurl = await getIndex(query.name, query.type)
-    console.log(indexOfTheurl)
-    console.log(query)
 
     if((query.ontor && record[recordName.indexOf(query.name)].TorUserBanned) || indexOfTheurl == -1) {
       //not allowed
@@ -120,7 +118,7 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
 
       } else if(query.type == "SRV"){
         let target = await _MakeSRVResponse.make(query, record[indexOfTheurl])
-        thisServer.records[query.name] = [{record: new ARecord(target) }]
+        thisServer.records[query.name] = [{record: new SRVRecord({host: target.host,port: target.port})}]
 
       } else if(query.type == "TXT"){
         let target = await _MakeTXTResponse.make(query, record[indexOfTheurl])
