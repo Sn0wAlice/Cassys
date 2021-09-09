@@ -5,15 +5,32 @@ welcome()
 
 import { PrintConfs } from "./utils/printConfs.ts";
 import { MakeAResponse } from "./record/a.ts";
+import { MakeAAAAResponse } from "./record/aaaa.ts";
+import { MakeCNAMEResponse } from "./record/cname.ts";
+import { MakeMXResponse } from "./record/mx.ts";
+import { MakeNSResponse } from "./record/ns.ts";
+import { MakeSOAResponse } from "./record/soa.ts";
+import { MakeSRVResponse } from "./record/srv.ts";
+import { MakeTXTResponse } from "./record/txt.ts"
+
+
+const _MakeAResponse = new MakeAResponse()
+const _MakeAAAAResponse = new MakeAAAAResponse()
+const _MakeCNAMEResponse = new MakeCNAMEResponse()
+const _MakeMXResponse = new MakeMXResponse()
+const _MakeNSResponse = new MakeNSResponse()
+const _MakeSOAResponse = new MakeSOAResponse()
+const _MakeSRVResponse = new MakeSRVResponse()
+const _MakeTXTResponse = new MakeTXTResponse()
+
 
 const _TorNodes = new TorNodes()
-const _MakeAResponse = new MakeAResponse()
 const _PrintConfs = new PrintConfs()
 
 async function MakeRecord() {
   let records = []
   for(let i=0; i<record.length; i++) {
-    records.push(record[i].url)
+    records.push({url: record[i].url, type: record[i].type})
   }
   return records
 }
@@ -22,6 +39,15 @@ async function MakeRecord() {
 const server = new DNSServer({
   "pc2.me": new ARecord("127.0.0.1"),
 })
+
+async function getIndex(url, type) {
+  for(let i=0; i<recordName.length; i++){
+    if(recordName[i].url === url && recordName[i].type === type){
+      return i
+    }
+  }
+  return -1
+}
 
 /*
 exemple of record
@@ -40,8 +66,10 @@ exemple of record
 
 let record = JSON.parse(Deno.readTextFileSync("config.json"))
 let recordName = await MakeRecord()
-await _PrintConfs.printConfs(record)
 
+console.log(recordName)
+
+await _PrintConfs.printConfs(record)
 await _TorNodes.dlTorNodes()
 
 let TorNodesArray = Deno.readTextFileSync("./utils/torNodes.txt").split('\n')
@@ -52,29 +80,61 @@ server.on("listen", () => {
 
 server.listen({ port: 6969, script: async function main(query, thisServer) {
   try{
-    if(recordName.includes(query.name)) {
-      
-      if(TorNodesArray.includes(query._client.hostname)) {
-        query.ontor = true
-      } else {
-        query.ontor = false
-      }
-
-      if(query.ontor && record[recordName.indexOf(query.name)].TorUserBanned) {
-        //not allowed
-      } else {
-        if(query.type == "A"){
-          let target = await _MakeAResponse.make(query, record[recordName.indexOf(query.name)])
-          thisServer.records[query.name] = [{record: new ARecord(target) }]
-        }
-      }
-
-      
+    
+    if(TorNodesArray.includes(query._client.hostname)) {
+      query.ontor = true
     } else {
-      console.log(`No record for the query: ${query.name}`)
+      query.ontor = false
+    }
+
+    let indexOfTheurl = await getIndex(query.name, query.type)
+    console.log(indexOfTheurl)
+    console.log(query)
+
+    if((query.ontor && record[recordName.indexOf(query.name)].TorUserBanned) || indexOfTheurl == -1) {
+      //not allowed
+    } else {
+      if(query.type == "A"){
+        let target = await _MakeAResponse.make(query, record[indexOfTheurl])
+        thisServer.records[query.name] = [{record: new ARecord(target) }]
+
+      } else if(query.type == "AAAA"){
+        let target = await _MakeAAAAResponse.make(query, record[indexOfTheurl])
+        thisServer.records[query.name] = [{record: new AAAARecord(target) }]
+
+      } else if(query.type == "CNAME"){
+        let target = await _MakeCNAMEResponse.make(query, record[indexOfTheurl])
+        thisServer.records[query.name] = [{record: new CNAMERecord(target) }]
+
+      } else if(query.type == "MX"){
+        let target = await _MakeMXResponse.make(query, record[indexOfTheurl])
+        thisServer.records[query.name] = [{record: new ARecord(target) }]
+
+      } else if(query.type == "NS"){
+        let target = await _MakeNSResponse.make(query, record[indexOfTheurl])
+        thisServer.records[query.name] = [{record: new NSRecord(target) }]
+
+      } else if(query.type == "SOA"){
+        let target = await _MakeSOAResponse.make(query, record[indexOfTheurl])
+        thisServer.records[query.name] = [{record: new ARecord(target) }]
+
+      } else if(query.type == "SRV"){
+        let target = await _MakeSRVResponse.make(query, record[indexOfTheurl])
+        thisServer.records[query.name] = [{record: new ARecord(target) }]
+
+      } else if(query.type == "TXT"){
+        let target = await _MakeTXTResponse.make(query, record[indexOfTheurl])
+        thisServer.records[query.name] = [{record: new TXTRecord(target) }]
+      }
+
+      console.log(JSON.stringify(thisServer))
     }
   } catch(e) {
     console.log(e)
   }
-  return {this: thisServer, query: query};
+  try {
+    return {this: thisServer, query: query};
+  } catch(e){
+    console.log(e)
+  }
 }});

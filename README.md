@@ -65,6 +65,21 @@ Banned IP Will bypass ALL the filter :) *Logic*
 }
 ```
 
+## Record
+- A `beta`
+- AAAA `no-work`
+- CNAME `no-work`
+- MX `no-work`
+- NS `no-work`
+- SOA `no-work`
+- SRV `no-work`
+- TXT `beta`
+
 # TODO
+
+- Detect IPV4 - IPV6 for ip restriction
+
+- AAAA range calc
+- AAAA record response error
 
 - DNS analyse to detect Other DNS serveur on the private network

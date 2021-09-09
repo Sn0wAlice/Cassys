@@ -4,7 +4,7 @@ const _ARecordIpRestrict = new ARecordIpRestrict()
 import { checkRequest } from "./checker.ts"
 const _checkRequest = new checkRequest()
 
-export class MakeAResponse {
+export class MakeNSResponse {
     async make(query, record){
         console.log(record)
         console.log(query)

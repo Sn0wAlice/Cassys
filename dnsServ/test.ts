@@ -30,6 +30,9 @@ const server = new DNSServer({
   }),
 });
 
+
+console.log(JSON.stringify(server))
+
 server.on("listen", () => {
   console.log("Listening!");
 });
