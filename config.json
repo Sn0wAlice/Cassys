@@ -79,7 +79,7 @@
         "COUNTRY_multipleTargetDefalt": "2001:6db8:10b8:20b8:30b8:40b8:3257:0006",
         "COUNTRY_multipleTarget": [
             {
-                "country": ["France"],
+                "country": ["france"],
                 "target": "2001:6db8:10b8:20b8:30b8:40b8:3257:0007"      
             }
         ],
@@ -125,7 +125,7 @@
         "COUNTRY_multipleTargetDefalt": "exemple5.com",
         "COUNTRY_multipleTarget": [
             {
-                "country": ["France"],
+                "country": ["france"],
                 "target": "exemple6.com"      
             }
         ],
@@ -171,7 +171,7 @@
         "COUNTRY_multipleTargetDefalt": "17.0.0.1",
         "COUNTRY_multipleTarget": [
             {
-                "country": ["France"],
+                "country": ["france"],
                 "target": "17.0.3.1"      
             }
         ],
@@ -217,7 +217,7 @@
         "COUNTRY_multipleTargetDefalt": "17.0.0.1",
         "COUNTRY_multipleTarget": [
             {
-                "country": ["France"],
+                "country": ["france"],
                 "target": "17.0.3.1"      
             }
         ],
@@ -263,7 +263,7 @@
         "COUNTRY_multipleTargetDefalt": "17.0.0.1",
         "COUNTRY_multipleTarget": [
             {
-                "country": ["France"],
+                "country": ["france"],
                 "target": "17.0.3.1"      
             }
         ],
@@ -310,7 +310,7 @@
         "COUNTRY_multipleHostnameDefalt": "17.0.0.1",
         "COUNTRY_multipleHostname": [
             {
-                "country": ["France"],
+                "country": ["france"],
                 "hostname": "17.0.3.1"      
             }
         ],
@@ -356,7 +356,7 @@
         "COUNTRY_multipleTargetDefalt": "test 6",
         "COUNTRY_multipleTarget": [
             {
-                "country": ["France"],
+                "country": ["france"],
                 "target": "test 7"      
             }
         ],

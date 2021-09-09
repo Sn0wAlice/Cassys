@@ -65,7 +65,10 @@ Banned IP Will bypass ALL the filter :) *Logic*
 }
 ```
 
-## Record
+## TXT record
+Same that A record. Target = Content
+
+# Record
 - A `beta`
 - AAAA `no-work`
 - CNAME `no-work`
@@ -77,6 +80,8 @@ Banned IP Will bypass ALL the filter :) *Logic*
 
 ## Args
 
+- `--debug`
+     - Activate the debug mode
 - `--countryForce`
      - Force user to pass by country restriction
 
