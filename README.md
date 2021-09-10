@@ -73,8 +73,8 @@ Same that A record. Target = Content
 - AAAA `no-work`
 - CNAME `no-work`
 - MX `no-work`
-- NS `no-work`
-- SOA `no-work`
+- NS `beta`
+- SOA `beta`
 - SRV `beta`
 - TXT `beta`
 
