@@ -297,7 +297,7 @@
                 "endB": 255,
                 "endC": 255,
                 "endD": 255,
-                "hostname": "srv.exemple4.com"      
+                "target": "srv.exemple4.com"      
             },
             {
                  "solo": true,

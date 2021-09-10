@@ -21,12 +21,20 @@ export class MakeSRVResponse {
         let checkMultipleHostnameIP = await _checkRequest.checkMultipleTargetIP(record, query)
         let country = await _checkRequest.checkCountry(record, query)
 
+
+        console.log(bannedIP)
+        console.log(torUser)
+        console.log(hackerMode)
+        console.log(checkMultipleHostnameIP)
+        console.log(country)
+
         //Banned user or not
         if(bannedIP || query.TorUserBanned){
             //ban the user
             target.host = query.bannedIpHostname
             console.log(`[${query._client.hostname}] is BANNED`)
         } else {
+            
             if(torUser){
                 target.host = query.TorRedirectHostname
             } else if(hackerMode){
@@ -35,7 +43,9 @@ export class MakeSRVResponse {
             
             //for the IP range
             if(checkMultipleHostnameIP){
+                console.log("------------")
                 target.host = await _ARecordIpRestrict.check(query, record)
+                console.log(target)
             }  
             
             //check country if not IP range
