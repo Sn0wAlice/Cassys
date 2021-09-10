@@ -125,7 +125,9 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
         thisServer.records[query.name] = [{record: new TXTRecord(target) }]
       }
 
-      console.log(JSON.stringify(thisServer))
+      if(Deno.args.indexOf("--debug") != -1){
+        console.log(JSON.stringify(thisServer))
+      }
     }
   } catch(e) {
     console.log(e)
