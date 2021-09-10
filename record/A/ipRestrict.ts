@@ -2,6 +2,11 @@ export class ARecordIpRestrict {
     async check(query, record){
         let target = record.IP_multipleTargetDefalt;
 
+
+        if(record.IP_multipleHostname != undefined){
+            record.IP_multipleTarget = record.IP_multipleHostname
+        }
+
         for(let i = 0; i < record.IP_multipleTarget.length; i++){
             //All the solo ip
             if(record.IP_multipleTarget[i].solo){

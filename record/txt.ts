@@ -37,7 +37,7 @@ export class MakeTXTResponse {
             }  
             
             //check country if not IP range
-            if(country && target === Basetarget){
+            if((country && target === Basetarget) || Deno.args.indexOf('--countryForce')>-1){
                 target = record.COUNTRY_multipleTargetDefalt
             }
 

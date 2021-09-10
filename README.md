@@ -75,7 +75,7 @@ Same that A record. Target = Content
 - MX `no-work`
 - NS `no-work`
 - SOA `no-work`
-- SRV `no-work`
+- SRV `beta`
 - TXT `beta`
 
 ## Args

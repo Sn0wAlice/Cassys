@@ -11,7 +11,7 @@ export class checkRequest {
     }
 
     async checkTor(record, query) {
-        if(query.ontor && query.TorUserRedirect && query.TorRedirectTarget != undefined){
+        if(query.ontor && query.TorUserRedirect && (query.TorRedirectTarget != undefined || query.TorRedirectHostname != undefined)){
             console.log(`[${query._client.hostname}] is TOR NetWork`)
             return true
         } else {
@@ -29,7 +29,7 @@ export class checkRequest {
     }
 
     async checkMultipleTargetIP(record, query){
-        if(record.IsMultipleTargetIP){
+        if(record.IsMultipleTargetIP || record.IsMultipleHostnameIP){
             console.log(`[${query._client.hostname}] pass by '${query.name}' MODE: [RESTRICT IP]`)
             return true
         } else {
@@ -38,7 +38,7 @@ export class checkRequest {
     }
 
     async checkCountry(record, query) {
-        if(record.IsMultipleTargetCOUNTRY){
+        if(record.IsMultipleTargetCOUNTRY || record.IsMultipleHostnameCOUNTRY){
             console.log(`[${query._client.hostname}] pass by '${query.name}' MODE: [COUNTRY]`)
             return true
         } else {
