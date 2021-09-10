@@ -114,7 +114,7 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
 
       } else if(query.type == "SOA"){
         let target = await _MakeSOAResponse.make(query, record[indexOfTheurl])
-        thisServer.records[query.name] = [{record: new ARecord(target) }]
+        thisServer.records[query.name] = [{record: new SOARecord({host: target}) }]
 
       } else if(query.type == "SRV"){
         let target = await _MakeSRVResponse.make(query, record[indexOfTheurl])
