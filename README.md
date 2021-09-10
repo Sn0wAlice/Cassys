@@ -65,13 +65,15 @@ Banned IP Will bypass ALL the filter :) *Logic*
 }
 ```
 
+All other record see `./config.json` to copy past conf :)
+
 ## TXT record
 Same that A record. Target = Content
 
 # Record
 - A `beta`
 - AAAA `no-work`
-- CNAME `no-work`
+- CNAME `beta`
 - MX `beta`
 - NS `beta`
 - SOA `beta`
