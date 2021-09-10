@@ -7,8 +7,6 @@ export class ARecordIpRestrict {
             record.IP_multipleTarget = record.IP_multipleHostname
         }
 
-        console.log(record.IP_multipleTarget)
-
         for(let i = 0; i < record.IP_multipleTarget.length; i++){
             //All the solo ip
             if(record.IP_multipleTarget[i].solo){

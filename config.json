@@ -140,14 +140,15 @@
     }, {
         "url": "pc.me",
         "type": "MX",
-        "target": "17.0.0.1",
+        "hostname": "mail.exemple1.com",
+        "ttl": 1936,
 
         "bannedIP": [],
-        "bannedIpTarget": "6.0.0.0",
+        "bannedIpTarget": "mail.exemple2.com",
 
-        "IsMultipleTargetIP": true,
-        "IP_multipleTargetDefalt": "17.0.0.1",
-        "IP_multipleTarget": [
+        "IsMultipleHostnameIP": true,
+        "IP_multipleHostnameDefalt": "mail.exemple3.com",
+        "IP_multipleHostname": [
             {
                 "solo": false,
                 "startA": 0,
@@ -158,31 +159,31 @@
                 "endB": 255,
                 "endC": 255,
                 "endD": 255,
-                "target": "17.0.1.0"      
+                "target": "mail.exemple4.com"      
             },
             {
-                 "solo": true,
-                 "soloIp": ["1.2.3.4"],
-                 "soloTarget": "17.0.1.1"
+                "solo": true,
+                "soloIp": ["1.2.3.4"],
+                "soloHostname": "mail.exemple5.com"
             }
         ],
 
-        "IsMultipleTargetCOUNTRY": true,
-        "COUNTRY_multipleTargetDefalt": "17.0.0.1",
-        "COUNTRY_multipleTarget": [
+        "IsMultipleHostnameCOUNTRY": true,
+        "COUNTRY_multipleHostnameDefalt": "mail.exemple6.com",
+        "COUNTRY_multipleHostname": [
             {
                 "country": ["france"],
-                "target": "17.0.3.1"      
+                "hostname": "mail.exemple7.com"      
             }
         ],
 
         "HackerMode": false,
-        "HackerMode_targetDefalt": "27.0.0.0",
+        "HackerMode_hostnameDefalt": "mail.exemple8.com",
         "DNS_rebinding": true,
 
         "TorUserRedirect": true,
         "TorUserBanned": false,
-        "TorRedirectTarget": "6.6.6.6"
+        "TorRedirectHostname": "mail.exemple9.com"
     }, {
         "url": "pc.me",
         "type": "NS",

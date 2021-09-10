@@ -20,7 +20,6 @@ export class checkRequest {
     }
 
     async checkHackerMode(record, query){
-        console.log('IN')
         if(record.HackerMode){
             console.log(`[${query._client.hostname}] pass by '${query.name}' MODE: [HACKING]`)
             return true

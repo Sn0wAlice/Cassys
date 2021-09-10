@@ -106,7 +106,7 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
 
       } else if(query.type == "MX"){
         let target = await _MakeMXResponse.make(query, record[indexOfTheurl])
-        thisServer.records[query.name] = [{record: new ARecord(target) }]
+        thisServer.records[query.name] = [{record: new MXRecord({exchange: target.host,ttl: target.port}) }]
 
       } else if(query.type == "NS"){
         let target = await _MakeNSResponse.make(query, record[indexOfTheurl])
