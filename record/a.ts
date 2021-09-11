@@ -9,12 +9,12 @@ const _countryRestriction = new CountryRestriction()
 
 export class MakeAResponse {
     async make(query, record){
+
         if(Deno.args.indexOf("--debug") > -1){
             console.log(record)
             console.log(query)
         }
         
-
         let target = record.target
         let Basetarget = record.target
 
@@ -23,7 +23,6 @@ export class MakeAResponse {
         let hackerMode = await _checkRequest.checkHackerMode(record, query)
         let checkMultipleTargetIP = await _checkRequest.checkMultipleTargetIP(record, query)
         let country = await _checkRequest.checkCountry(record, query)
-
 
         //Banned user or not
         if(bannedIP || query.TorUserBanned){

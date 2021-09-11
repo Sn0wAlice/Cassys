@@ -1,7 +1,6 @@
 import { DNSServer, ARecord, AAAARecord, CNAMERecord, MXRecord, NSRecord, SOARecord, SRVRecord, TXTRecord} from "./dnsServ/mod.ts";
-import { welcome } from "./utils/welcome.ts";
+import { welcome } from "./utils/welcome.ts"; welcome()
 import { TorNodes } from "./utils/torNodes.ts";
-welcome()
 
 import { PrintConfs } from "./utils/printConfs.ts";
 import { MakeAResponse } from "./record/a.ts";
@@ -13,7 +12,6 @@ import { MakeSOAResponse } from "./record/soa.ts";
 import { MakeSRVResponse } from "./record/srv.ts";
 import { MakeTXTResponse } from "./record/txt.ts"
 
-
 const _MakeAResponse = new MakeAResponse()
 const _MakeAAAAResponse = new MakeAAAAResponse()
 const _MakeCNAMEResponse = new MakeCNAMEResponse()
@@ -22,7 +20,6 @@ const _MakeNSResponse = new MakeNSResponse()
 const _MakeSOAResponse = new MakeSOAResponse()
 const _MakeSRVResponse = new MakeSRVResponse()
 const _MakeTXTResponse = new MakeTXTResponse()
-
 
 const _TorNodes = new TorNodes()
 const _PrintConfs = new PrintConfs()
@@ -36,9 +33,7 @@ async function MakeRecord() {
 }
 
 //See exemple in ./Demame/test.ts
-const server = new DNSServer({
-  "pc2.me": new ARecord("127.0.0.1"),
-})
+const server = new DNSServer({})
 
 async function getIndex(url, type) {
   for(let i=0; i<recordName.length; i++){
@@ -63,11 +58,8 @@ exemple of record
 }
 */
 
-
 let record = JSON.parse(Deno.readTextFileSync("config.json"))
 let recordName = await MakeRecord()
-
-console.log(recordName)
 
 await _PrintConfs.printConfs(record)
 await _TorNodes.dlTorNodes()
@@ -128,6 +120,7 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
       if(Deno.args.indexOf("--debug") != -1){
         console.log(JSON.stringify(thisServer))
       }
+      
     }
   } catch(e) {
     console.log(e)

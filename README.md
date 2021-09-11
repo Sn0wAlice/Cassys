@@ -65,7 +65,7 @@ Banned IP Will bypass ALL the filter :) *Logic*
 }
 ```
 
-All other record see `./config.json` to copy past conf :)
+All other record see `./exemple.json` to copy past conf :)
 
 ## TXT record
 Same that A record. Target = Content

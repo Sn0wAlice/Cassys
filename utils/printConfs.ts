@@ -33,7 +33,6 @@ export class PrintConfs {
             } else if(type === "SRV"){
                 console.log(`~ '${record.url}' ${type} [BASE] - PORT: ${other}`)
             }
-            
         }
 
         if(record.HackerMode){
