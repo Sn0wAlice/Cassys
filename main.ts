@@ -58,7 +58,7 @@ exemple of record
 }
 */
 
-let record = JSON.parse(Deno.readTextFileSync("config.json"))
+let record = JSON.parse(Deno.readTextFileSync("./config/config.json"))
 let recordName = await MakeRecord()
 
 await _PrintConfs.printConfs(record)
@@ -72,7 +72,8 @@ server.on("listen", () => {
 
 server.listen({ port: 6969, script: async function main(query, thisServer) {
   try{
-    
+    query.name = query.name.toLowerCase()
+	console.log(`[${query._client.hostname}] - ${query.name} - ${query.type}`)
     if(TorNodesArray.includes(query._client.hostname)) {
       query.ontor = true
     } else {
@@ -81,9 +82,16 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
 
     let indexOfTheurl = await getIndex(query.name, query.type)
 
-    if((query.ontor && record[recordName.indexOf(query.name)].TorUserBanned) || indexOfTheurl == -1) {
-      //not allowed
-    } else {
+    let breakTheLoop = false
+
+    try{
+      if((query.ontor && record[recordName.indexOf(query.name)].TorUserBanned) || indexOfTheurl == -1) {
+        //not allowed
+        //console.log("Not allowed")
+        breakTheLoop = true
+      } 
+    } catch(err){}
+    if(!breakTheLoop) {
       if(query.type == "A"){
         let target = await _MakeAResponse.make(query, record[indexOfTheurl])
         thisServer.records[query.name] = [{record: new ARecord(target) }]

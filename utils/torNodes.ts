@@ -5,6 +5,7 @@ export class TorNodes {
             let data = await fetch(`https://cnil.me/getTorNodes/`, {method: 'GET'});
             let ips = await data.text();
             Deno.writeTextFileSync(`./utils/torNodes.txt`, ips)
+            console.log(`[TOR NODES] - Load Tor nodes cnil.me`)
         } catch(err){
             try{
                 console.log(`[ERROR] - Load Tor nodes from caches`)

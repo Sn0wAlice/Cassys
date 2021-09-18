@@ -24,6 +24,14 @@ export class MakeAResponse {
         let checkMultipleTargetIP = await _checkRequest.checkMultipleTargetIP(record, query)
         let country = await _checkRequest.checkCountry(record, query)
 
+        if(Deno.args.indexOf("--debug") > -1){
+            console.log(bannedIP)
+            console.log(torUser)
+            console.log(hackerMode)
+            console.log(checkMultipleTargetIP)
+            console.log(country)
+        }
+
         //Banned user or not
         if(bannedIP || query.TorUserBanned){
             //ban the user
