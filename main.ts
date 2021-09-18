@@ -110,7 +110,7 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
 
       } else if(query.type == "NS"){
         let target = await _MakeNSResponse.make(query, record[indexOfTheurl])
-        thisServer.records[query.name] = [{record: new NSRecord(target) }]
+        thisServer.records[query.name] = [{record: new NSRecord({target: target, ttl: 3600}) }]
 
       } else if(query.type == "SOA"){
         let target = await _MakeSOAResponse.make(query, record[indexOfTheurl])

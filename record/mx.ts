@@ -9,9 +9,11 @@ export class MakeMXResponse {
 
         //Warning: target => hostname
 
-        console.log(record)
-        console.log(query)
-
+        if(Deno.args.indexOf("--debug") > -1){
+            console.log(record)
+            console.log(query)
+        }
+        
         let target = {host: record.hostname, ttl: record.ttl}
         let Basetarget = record.target
 

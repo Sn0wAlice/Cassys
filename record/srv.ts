@@ -9,8 +9,11 @@ export class MakeSRVResponse {
 
         //Warning: target => hostname
 
-        console.log(record)
-        console.log(query)
+        if(Deno.args.indexOf("--debug") > -1){
+            console.log(record)
+            console.log(query)
+        }
+        
 
         let target = {host: record.hostname, port: record.port}
         let Basetarget = record.target

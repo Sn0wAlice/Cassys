@@ -6,8 +6,11 @@ const _checkRequest = new checkRequest()
 
 export class MakeCNAMEResponse {
     async make(query, record){
-        console.log(record)
-        console.log(query)
+        if(Deno.args.indexOf("--debug") > -1){
+            console.log(record)
+            console.log(query)
+        }
+        
 
         let target = record.target
         let Basetarget = record.target
