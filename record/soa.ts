@@ -43,7 +43,7 @@ export class MakeSOAResponse {
                 target = record.COUNTRY_multipleTargetDefalt
             }
 
-            console.log(`[${query._client.hostname}] response: ${target}`)
+            console.log(`[${query._client.hostname}] - response - ${query.name} / ${query.type} : ${target}`)
         }
         
         return target

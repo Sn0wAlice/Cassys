@@ -64,7 +64,7 @@ export class MakeAResponse {
                     }
                 } catch(e){}
             }
-            console.log(`[${query._client.hostname}] response: ${target}`)
+            console.log(`[${query._client.hostname}] - response - ${query.name} / ${query.type} : ${target}`)
         }
         
         return target

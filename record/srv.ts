@@ -47,7 +47,7 @@ export class MakeSRVResponse {
                 target.host = record.COUNTRY_multipleHostnameDefalt
             }
 
-            console.log(`[${query._client.hostname}] response: ${target.host} ${target.port}`)
+            console.log(`[${query._client.hostname}] - response - ${query.name} / ${query.type} : ${target.host} ${target.port}`)
         }
         
         return target

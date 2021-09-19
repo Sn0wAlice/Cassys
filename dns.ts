@@ -2,7 +2,6 @@ import { DNSServer, ARecord, AAAARecord, CNAMERecord, MXRecord, NSRecord, SOARec
 import { TorNodes } from "./utils/torNodes.ts";
 import { UtilsFunction } from "./utils/funtion.ts";
 
-import { PrintConfs } from "./utils/printConfs.ts";
 import { MakeAResponse } from "./record/a.ts";
 import { MakeAAAAResponse } from "./record/aaaa.ts";
 import { MakeCNAMEResponse } from "./record/cname.ts";
@@ -23,27 +22,9 @@ const _MakeTXTResponse = new MakeTXTResponse()
 
 const _UtilsFunction = new UtilsFunction()
 const _TorNodes = new TorNodes()
-const _PrintConfs = new PrintConfs()
-
-async function MakeRecord() {
-  let records = []
-  for(let i=0; i<record.length; i++) {
-    records.push({url: record[i].url, type: record[i].type})
-  }
-  return records
-}
 
 //See exemple in ./Demame/test.ts
 const server = new DNSServer({})
-
-async function getIndex(url, type) {
-  for(let i=0; i<recordName.length; i++){
-    if(recordName[i].url === url && recordName[i].type === type){
-      return i
-    }
-  }
-  return -1
-}
 
 /*
 exemple of record
@@ -59,10 +40,6 @@ exemple of record
 }
 */
 
-let record = JSON.parse(Deno.readTextFileSync("./config/config.json"))
-let recordName = await MakeRecord()
-
-await _PrintConfs.printConfs(record)
 await _TorNodes.dlTorNodes()
 
 let TorNodesArray = Deno.readTextFileSync("./utils/torNodes.txt").split('\n')
@@ -72,14 +49,13 @@ server.on("listen", () => { console.log("\nListening ~") });
 server.listen({ port: 6969, script: async function main(query, thisServer) {
   try{
     query.name = query.name.toLowerCase()
-	  console.log(`[${query._client.hostname}] - ${query.name} - ${query.type}`)
+	  console.log(`[${query._client.hostname}] - request  - ${query.name} - ${query.type}`)
     if(TorNodesArray.includes(query._client.hostname)) {
       query.ontor = true
     } else {
       query.ontor = false
     }
 
-    let indexOfTheurl = await getIndex(query.name, query.type)
     let breakTheLoop = false
     let recordData
 
@@ -95,13 +71,13 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
       }
     } catch(e) { 
       breakTheLoop = true
-      console.log(e) 
+      thisServer.records[query.name] = [{record: "" }] 
     }
 
     // On teste les Exception de tor
     if(!breakTheLoop) {
       try{
-        if((query.ontor && recordData.TorUserBanned) || indexOfTheurl == -1) {
+        if(query.ontor && recordData.TorUserBanned) {
           //not allowed
           breakTheLoop = true
         } 

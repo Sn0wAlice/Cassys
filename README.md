@@ -4,7 +4,6 @@
 
 - Working In early beta
 
-
 # Record
 
 ## Need to know
@@ -13,7 +12,7 @@
 **HackerMode** > **Restrict By Ip** > **Restrict By Country**. So if a IP restriction affect response, Country restriction will be bypass. Same for HackerMode and Restric By Ip<br>
 Banned IP Will bypass ALL the filter :) *Logic*
 
-## A record
+## Records
 ```JSON
 {
      "url": "exemple.com", //The URL *Required*
@@ -67,12 +66,17 @@ Banned IP Will bypass ALL the filter :) *Logic*
 
 All other record see `./exemple.json` to copy past conf :)
 
-## TXT record
+In files: `config/gen/${HOSTNAME}/${SUB1}/${SUB2}/${TYPE}.json`<br>
+__Exemple__: 
+- testing.cassys.cnil.me / CNAME
+- `config/gen/cnil.me/cassys/testing/CNAME.json`
+
+### TXT record
 Same that A record. Target = Content
 
-# Record
+# Record Support
 - A `beta`
-- AAAA `no-work`
+- AAAA `unstable`
 - CNAME `beta`
 - MX `beta`
 - NS `beta`
@@ -82,14 +86,16 @@ Same that A record. Target = Content
 
 ## Args
 
+### DNS
 - `--debug`
      - Activate the debug mode
 - `--countryForce`
      - Force user to pass by country restriction
+
 
 # TODO
 
 - Detect IPV4 - IPV6 for ip restriction
 - IP country caches
 
-- DNS analyse to detect Other DNS serveur on the private network
+- DNS analyse to detect Other DNS server on the private network

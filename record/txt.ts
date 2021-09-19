@@ -44,7 +44,7 @@ export class MakeTXTResponse {
                 target = record.COUNTRY_multipleTargetDefalt
             }
 
-            console.log(`[${query._client.hostname}] response: ${target}`)
+            console.log(`[${query._client.hostname}] - response - ${query.name} / ${query.type} : TXT content`)
         }
         
         return target

@@ -46,7 +46,7 @@ export class MakeMXResponse {
                 target.host = record.COUNTRY_multipleHostnameDefalt
             }
 
-            console.log(`[${query._client.hostname}] response: ${target.host} ${target.ttl}`)
+            console.log(`[${query._client.hostname}] - response - ${query.name} / ${query.type} : ${target.host} ${target.ttl}`)
         }
         
         return target
