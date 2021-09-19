@@ -1,6 +1,6 @@
 # Cassys <img src="./img/blackcurrant.png" height="50">
 
-<img src="./img/open-source.gif">
+<img src="./img/cassys.gif">
 
 - Working In early beta
 
