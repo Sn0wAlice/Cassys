@@ -1,162 +1,56 @@
-import { DNSServer, ARecord, AAAARecord, CNAMERecord, MXRecord, NSRecord, SOARecord, SRVRecord, TXTRecord} from "./dnsServ/mod.ts";
-import { welcome } from "./utils/welcome.ts"; welcome()
-import { TorNodes } from "./utils/torNodes.ts";
-import { UtilsFunction } from "./utils/funtion.ts";
+import { welcome } from "./utils/welcome.ts"; 
 
-import { PrintConfs } from "./utils/printConfs.ts";
-import { MakeAResponse } from "./record/a.ts";
-import { MakeAAAAResponse } from "./record/aaaa.ts";
-import { MakeCNAMEResponse } from "./record/cname.ts";
-import { MakeMXResponse } from "./record/mx.ts";
-import { MakeNSResponse } from "./record/ns.ts";
-import { MakeSOAResponse } from "./record/soa.ts";
-import { MakeSRVResponse } from "./record/srv.ts";
-import { MakeTXTResponse } from "./record/txt.ts"
+// Execute Command
+async function Execute(commande: any) {
+  let content = "";
+  let comcmd = commande.split(' ')
+  let p = Deno.run({cmd: comcmd,stdout: "inherit"});
 
-const _MakeAResponse = new MakeAResponse()
-const _MakeAAAAResponse = new MakeAAAAResponse()
-const _MakeCNAMEResponse = new MakeCNAMEResponse()
-const _MakeMXResponse = new MakeMXResponse()
-const _MakeNSResponse = new MakeNSResponse()
-const _MakeSOAResponse = new MakeSOAResponse()
-const _MakeSRVResponse = new MakeSRVResponse()
-const _MakeTXTResponse = new MakeTXTResponse()
-
-const _UtilsFunction = new UtilsFunction()
-const _TorNodes = new TorNodes()
-const _PrintConfs = new PrintConfs()
-
-async function MakeRecord() {
-  let records = []
-  for(let i=0; i<record.length; i++) {
-    records.push({url: record[i].url, type: record[i].type})
+  let { code } = await p.status();
+  if (code === 0) {
+    let rawOutput = await p.output();
+    content = new TextDecoder().decode(rawOutput);
   }
-  return records
+  return content
 }
 
-//See exemple in ./Demame/test.ts
-const server = new DNSServer({})
 
-async function getIndex(url, type) {
-  for(let i=0; i<recordName.length; i++){
-    if(recordName[i].url === url && recordName[i].type === type){
-      return i
+// +---------------------+
+// | Launch all the apps |
+// +---------------------+
+
+//Launch the DNS
+async function Cassys_DNS() {
+  if(Deno.args.indexOf('--no-DNS') == -1){
+    while (true) {
+      console.log(`[Cassys] - [Launch] - ${Date.now()} - DNS Server`)
+      await Execute("deno run -A --unstable --no-check dns.ts")
     }
   }
-  return -1
 }
 
-/*
-exemple of record
-{
-  "txt.google.com": new TXTRecord("txt"),
-  "cname.google.com": new CNAMERecord("google.com"),
-  "google.com": new ARecord("127.0.0.1"),
-  "v6.google.com": new AAAARecord("2001:6db8:10b8:20b8:30b8:40b8:3257:9652"),
-  "mx.google.com": new MXRecord({exchange: "mail.example.com",ttl: 1936}),
-  "ns.google.com": new NSRecord("ns.example.com"),
-  "soa.google.com": new SOARecord({host: "soa.example.com"}),
-  "srv.google.com": new SRVRecord({host: "voip.example.com",port: 6969,}),
+//Launch the Web
+async function Cassys_WEB() {
+  if(Deno.args.indexOf('--no-WEB') == -1){
+    while (true) {
+      console.log(`[Cassys] - [Launch] - ${Date.now()} - Web Server`)
+      await Execute("deno run -A --unstable --no-check web.ts")
+    }
+  }
 }
-*/
 
-let record = JSON.parse(Deno.readTextFileSync("./config/config.json"))
-let recordName = await MakeRecord()
-
-await _PrintConfs.printConfs(record)
-await _TorNodes.dlTorNodes()
-
-let TorNodesArray = Deno.readTextFileSync("./utils/torNodes.txt").split('\n')
-
-server.on("listen", () => { console.log("\nListening ~") });
-
-server.listen({ port: 6969, script: async function main(query, thisServer) {
-  try{
-    query.name = query.name.toLowerCase()
-	  console.log(`[${query._client.hostname}] - ${query.name} - ${query.type}`)
-    if(TorNodesArray.includes(query._client.hostname)) {
-      query.ontor = true
-    } else {
-      query.ontor = false
+//Launch the API
+async function Cassys_API() {
+  if(Deno.args.indexOf('--no-API') == -1){
+    while (true) {
+      console.log(`[Cassys] - [Launch] - ${Date.now()} - API Server`)
+      await Execute("deno run -A --unstable --no-check api.ts")
     }
-
-    let indexOfTheurl = await getIndex(query.name, query.type)
-    let breakTheLoop = false
-    let recordData
-
-    try{
-      if(["version.bind"].indexOf(query.name)){
-        // a faire
-        breakTheLoop = true
-        if(query.name === "version.bind"){
-          thisServer.records[query.name] = [{record: new TXTRecord(Deno.readTextFileSync("VERSION"))}]
-        }
-      } else {
-        recordData = JSON.parse(Deno.readTextFileSync(await _UtilsFunction.genFileLocation(query.name)+"/"+query.type+".json"))
-      }
-    } catch(e) { 
-      breakTheLoop = true
-      console.log(e) 
-    }
-
-    // On teste les Exception de tor
-    if(!breakTheLoop) {
-      try{
-        if((query.ontor && recordData.TorUserBanned) || indexOfTheurl == -1) {
-          //not allowed
-          breakTheLoop = true
-        } 
-      } catch(err){
-        breakTheLoop = true
-      }
-    }
-    
-    // On traite les requetes
-    if(!breakTheLoop) {
-      if(query.type == "A"){
-        let target = await _MakeAResponse.make(query, recordData)
-        thisServer.records[query.name] = [{record: new ARecord(target) }]
-
-      } else if(query.type == "AAAA"){
-        let target = await _MakeAAAAResponse.make(query, recordData)
-        thisServer.records[query.name] = [{record: new AAAARecord(target) }]
-
-      } else if(query.type == "CNAME"){
-        let target = await _MakeCNAMEResponse.make(query, recordData)
-        thisServer.records[query.name] = [{record: new CNAMERecord(target) }]
-
-      } else if(query.type == "MX"){
-        let target = await _MakeMXResponse.make(query, recordData)
-        thisServer.records[query.name] = [{record: new MXRecord({exchange: target.host,ttl: target.port}) }]
-
-      } else if(query.type == "NS"){
-        let target = await _MakeNSResponse.make(query, recordData)
-        thisServer.records[query.name] = [{record: new NSRecord({target: target, ttl: 3600}) }]
-
-      } else if(query.type == "SOA"){
-        let target = await _MakeSOAResponse.make(query, recordData)
-        thisServer.records[query.name] = [{record: new SOARecord({host: target}) }]
-
-      } else if(query.type == "SRV"){
-        let target = await _MakeSRVResponse.make(query, recordData)
-        thisServer.records[query.name] = [{record: new SRVRecord({host: target.host,port: target.port})}]
-
-      } else if(query.type == "TXT"){
-        let target = await _MakeTXTResponse.make(query, recordData)
-        thisServer.records[query.name] = [{record: new TXTRecord(target)}]
-      }
-
-      if(Deno.args.indexOf("--debug") != -1){
-        console.log(JSON.stringify(thisServer))
-      }
-      
-    }
-  } catch(e) {
-    console.log(e)
   }
-  try {
-    return {this: thisServer, query: query};
-  } catch(e){
-    console.log(e)
-  }
-}});
+}
+
+welcome()
+
+Cassys_DNS();
+Cassys_WEB();
+Cassys_API();
