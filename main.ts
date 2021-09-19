@@ -1,6 +1,7 @@
 import { DNSServer, ARecord, AAAARecord, CNAMERecord, MXRecord, NSRecord, SOARecord, SRVRecord, TXTRecord} from "./dnsServ/mod.ts";
 import { welcome } from "./utils/welcome.ts"; welcome()
 import { TorNodes } from "./utils/torNodes.ts";
+import { UtilsFunction } from "./utils/funtion.ts";
 
 import { PrintConfs } from "./utils/printConfs.ts";
 import { MakeAResponse } from "./record/a.ts";
@@ -21,6 +22,7 @@ const _MakeSOAResponse = new MakeSOAResponse()
 const _MakeSRVResponse = new MakeSRVResponse()
 const _MakeTXTResponse = new MakeTXTResponse()
 
+const _UtilsFunction = new UtilsFunction()
 const _TorNodes = new TorNodes()
 const _PrintConfs = new PrintConfs()
 
@@ -66,14 +68,12 @@ await _TorNodes.dlTorNodes()
 
 let TorNodesArray = Deno.readTextFileSync("./utils/torNodes.txt").split('\n')
 
-server.on("listen", () => {
-  console.log("\nListening ~");
-});
+server.on("listen", () => { console.log("\nListening ~") });
 
 server.listen({ port: 6969, script: async function main(query, thisServer) {
   try{
     query.name = query.name.toLowerCase()
-	console.log(`[${query._client.hostname}] - ${query.name} - ${query.type}`)
+	  console.log(`[${query._client.hostname}] - ${query.name} - ${query.type}`)
     if(TorNodesArray.includes(query._client.hostname)) {
       query.ontor = true
     } else {
@@ -81,48 +81,69 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
     }
 
     let indexOfTheurl = await getIndex(query.name, query.type)
-
     let breakTheLoop = false
+    let recordData
 
     try{
-      if((query.ontor && record[recordName.indexOf(query.name)].TorUserBanned) || indexOfTheurl == -1) {
-        //not allowed
-        //console.log("Not allowed")
+      if(["version.bind"].indexOf(query.name)){
+        // a faire
         breakTheLoop = true
-      } 
-    } catch(err){}
+        if(query.name === "version.bind"){
+          thisServer.records[query.name] = [{record: new TXTRecord(Deno.readTextFileSync("VERSION"))}]
+        }
+      } else {
+        recordData = JSON.parse(Deno.readTextFileSync(await _UtilsFunction.genFileLocation(query.name)+"/"+query.type+".json"))
+      }
+    } catch(e) { 
+      breakTheLoop = true
+      console.log(e) 
+    }
+
+    // On teste les Exception de tor
+    if(!breakTheLoop) {
+      try{
+        if((query.ontor && recordData.TorUserBanned) || indexOfTheurl == -1) {
+          //not allowed
+          breakTheLoop = true
+        } 
+      } catch(err){
+        breakTheLoop = true
+      }
+    }
+    
+    // On traite les requetes
     if(!breakTheLoop) {
       if(query.type == "A"){
-        let target = await _MakeAResponse.make(query, record[indexOfTheurl])
+        let target = await _MakeAResponse.make(query, recordData)
         thisServer.records[query.name] = [{record: new ARecord(target) }]
 
       } else if(query.type == "AAAA"){
-        let target = await _MakeAAAAResponse.make(query, record[indexOfTheurl])
+        let target = await _MakeAAAAResponse.make(query, recordData)
         thisServer.records[query.name] = [{record: new AAAARecord(target) }]
 
       } else if(query.type == "CNAME"){
-        let target = await _MakeCNAMEResponse.make(query, record[indexOfTheurl])
+        let target = await _MakeCNAMEResponse.make(query, recordData)
         thisServer.records[query.name] = [{record: new CNAMERecord(target) }]
 
       } else if(query.type == "MX"){
-        let target = await _MakeMXResponse.make(query, record[indexOfTheurl])
+        let target = await _MakeMXResponse.make(query, recordData)
         thisServer.records[query.name] = [{record: new MXRecord({exchange: target.host,ttl: target.port}) }]
 
       } else if(query.type == "NS"){
-        let target = await _MakeNSResponse.make(query, record[indexOfTheurl])
+        let target = await _MakeNSResponse.make(query, recordData)
         thisServer.records[query.name] = [{record: new NSRecord({target: target, ttl: 3600}) }]
 
       } else if(query.type == "SOA"){
-        let target = await _MakeSOAResponse.make(query, record[indexOfTheurl])
+        let target = await _MakeSOAResponse.make(query, recordData)
         thisServer.records[query.name] = [{record: new SOARecord({host: target}) }]
 
       } else if(query.type == "SRV"){
-        let target = await _MakeSRVResponse.make(query, record[indexOfTheurl])
+        let target = await _MakeSRVResponse.make(query, recordData)
         thisServer.records[query.name] = [{record: new SRVRecord({host: target.host,port: target.port})}]
 
       } else if(query.type == "TXT"){
-        let target = await _MakeTXTResponse.make(query, record[indexOfTheurl])
-        thisServer.records[query.name] = [{record: new TXTRecord(target) }]
+        let target = await _MakeTXTResponse.make(query, recordData)
+        thisServer.records[query.name] = [{record: new TXTRecord(target)}]
       }
 
       if(Deno.args.indexOf("--debug") != -1){

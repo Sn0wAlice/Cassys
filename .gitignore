@@ -1,2 +1,4 @@
 /utils/torNodes.txt
 /config/*.json
+/config/gen.*
+!/config/gen/.notEmpty
