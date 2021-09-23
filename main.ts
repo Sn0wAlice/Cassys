@@ -64,5 +64,5 @@ async function Cassys_API() {
 welcome()
 
 Cassys_DNS();
-//Cassys_WEB();
+Cassys_WEB();
 //Cassys_API();

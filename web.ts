@@ -1,15 +1,25 @@
-import { listenAndServe } from "https://deno.land/std@0.107.0/http/server.ts";
+import { serve, Reponse } from "https://deno.land/std@0.106.0/http/server.ts";
 
 let config = JSON.parse(Deno.readTextFileSync("./config.json")).web;
-const addr = `:${config.port}`;
+const server = serve({ port: config.port });
 
-const handler = (request: Request): Response => {
 
-    let response = { body:"" }
-    response.body = "Cassys";
+console.log(`[Cassys] - [Launch] - webserver running. Access it at: ${config.host}:${config.port}`);
 
-    return new Response(response.body, { status: 200 });
-};
+async function main(request) {
+    let response:Reponse = {}
 
-console.log(`Cassys webserver running. Access it at: ${config.port}:${config.host}`);
-await listenAndServe(addr, handler);
+    console.log(`[WebServer] - [Request] - ${request.url}`);
+
+    if(request.url == "/") {
+        request.url = "/index.html";
+    }
+
+    try{
+        response.body = Deno.readFileSync(`./website/${request.url}`)
+    } catch(err){}
+
+    request.respond(response)
+}
+
+for await (const req of server) { main(req) }
