@@ -40,6 +40,20 @@ export class UtilsFunction{
         } catch(err){
             console.log(err)
         }
+    }
+    async removeUrlContent(url:String) {
+        let urlArray = url.split('.');
+        let filesUrl = "./config/gen"
+        urlArray[urlArray.length-2] = urlArray[urlArray.length-2] + "." + urlArray[urlArray.length-1] 
+        for(let i=urlArray.length-2; i>=0; i--){
+            filesUrl = filesUrl + "/" + urlArray[i];
+        }
         
+        try{
+            await this.Execute("rm -rf " + filesUrl)
+            console.log(`[Cassys] - [DNS] - [REMOVE] - ${url} `)
+        } catch(err){
+            console.log(err)
+        }
     }
 }

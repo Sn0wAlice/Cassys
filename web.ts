@@ -4,7 +4,7 @@ let config = JSON.parse(Deno.readTextFileSync("./config.json")).web;
 const server = serve({ port: config.port });
 
 
-console.log(`[Cassys] - [Launch] - webserver running. Access it at: ${config.host}:${config.port}`);
+console.log(`[Cassys] - [Launch] - Webserver running. Access it at: ${config.host}:${config.port}`);
 
 async function main(request) {
     let response:Reponse = {}

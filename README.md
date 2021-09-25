@@ -13,6 +13,9 @@
 Banned IP Will bypass ALL the filter :) *Logic*
 
 ## Records
+
+> All the multiple target Are in beta testing __ONLY__
+
 ```JSON
 {
      "url": "exemple.com", //The URL *Required*
@@ -64,9 +67,10 @@ Banned IP Will bypass ALL the filter :) *Logic*
 }
 ```
 
-All other record see `./exemple.json` to copy past conf :)
+All other record see `./config/exemple.json` to copy past conf :)
 
-In files: `config/gen/${HOSTNAME}/${SUB1}/${SUB2}/${TYPE}.json`<br>
+### Order
+The file architecture is: `config/gen/${HOSTNAME}/${SUB1}/${SUB2}/${TYPE}.json`<br>
 __Exemple__: 
 - testing.cassys.cnil.me / CNAME
 - `config/gen/cnil.me/cassys/testing/CNAME.json`
@@ -85,6 +89,16 @@ Same that A record. Target = Content
 - TXT `beta`
 
 ## Args
+
+`deno run -A --unsable --no-check main.ts [ARGS]`
+
+### Starting
+- `--no-DNS`
+     - Don't start the DNS server (Port 6969)
+- `--no-WEB`
+     - Don't start the WEB server (Port in config.json)
+- `--no-API`
+     - Don't start the API server (Port in config.json)
 
 ### DNS
 - `--debug`

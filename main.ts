@@ -65,4 +65,4 @@ welcome()
 
 Cassys_DNS();
 Cassys_WEB();
-//Cassys_API();
+Cassys_API();
