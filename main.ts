@@ -61,8 +61,37 @@ async function Cassys_API() {
   }
 }
 
-welcome()
+//Launch the ProxyByPassClient
+async function ProxyByPassClient() {
+  while (true) {
+    try{
+      console.log(`[Cassys] - [Launch] - ${Date.now()} - ProxyByPassClient`)
+      await Execute("deno run -A --unstable --no-check ./record/DNS_exfil/client.ts")
+    } catch(err){
+      console.log(err)
+    }
+  }
+}
 
-Cassys_DNS();
-Cassys_WEB();
-Cassys_API();
+
+async function cleanTXTCache() {
+  try{
+    await Execute(`rm -r ./record/bypass/`)
+  } catch(err){}
+  try{
+    await Execute(`mkdir ./record/bypass/`)
+  } catch(err){}
+  console.log(`[Cassys] - [Launch] - ${Date.now()} - TXT caches is clean`)
+}
+
+welcome()
+await cleanTXTCache()
+
+//Launch the DNS
+if(Deno.args.indexOf('--ProxyPass') > -1){
+  ProxyByPassClient()
+} else {
+  Cassys_DNS();
+  Cassys_WEB();
+  Cassys_API();
+}

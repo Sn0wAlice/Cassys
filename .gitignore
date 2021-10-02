@@ -2,6 +2,7 @@
 /config/*.json
 /config/gen/*
 /api/conf.json
+/record/bypass/*.txt
 
 !/config/gen/.notEmpty
 !/config/exemple.json

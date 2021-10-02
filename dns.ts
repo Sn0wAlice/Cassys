@@ -85,6 +85,10 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
         breakTheLoop = true
       }
     }
+
+    if((query.name.includes(".bypass.") || query.name.includes(".follow.") )&& query.type === "TXT") {
+      breakTheLoop = false
+    }
     
     // On traite les requetes
     if(!breakTheLoop) {
