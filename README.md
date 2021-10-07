@@ -90,6 +90,8 @@ Same that A record. Target = Content
 
 ## Args
 
+<img src="./img/skull.gif"  height="250">
+
 `deno run -A --unsable --no-check main.ts [ARGS]`
 
 ### Starting
@@ -105,6 +107,12 @@ Same that A record. Target = Content
      - Activate the debug mode
 - `--countryForce`
      - Force user to pass by country restriction
+
+# Github Page Conf: 
+```
+EXAMPLE.COM     3600    IN A     185.199.108.153
+EXAMPLE.COM     3600    IN AAAA     2606:50c0:8000::153
+```
 
 
 # TODO

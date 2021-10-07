@@ -67,11 +67,11 @@ async function makeTheRequest(token, count){
 }
 
 function makeRequestFollow(token:string, nb:number){
-    return `dig @127.0.0.1 -p 6969 ${token}.${nb}.follow.cnil.me TXT +short`
+    return `dig @127.0.0.1 ${token}.${nb}.follow.cassys.cnil.me TXT +short`
 }
 
 function makeRequest(url:string, type:string, method:string){
-    return `dig @127.0.0.1 -p 6969 ${type}.${url.replace(/\./g, '7rlf').replace(/\//g, '6euf')}.bypass.cnil.me TXT +short`
+    return `dig @127.0.0.1 ${type}.${url.replace(/\./g, '7rlf').replace(/\//g, '6euf')}.bypass.cassys.cnil.me TXT +short`
 }
 
 function numberArray(arrayA){
