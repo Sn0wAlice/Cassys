@@ -41,6 +41,7 @@ export class UtilsFunction{
             console.log(err)
         }
     }
+    
     async removeUrlContent(url:String) {
         let urlArray = url.split('.');
         let filesUrl = "./config/gen"

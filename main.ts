@@ -84,6 +84,7 @@ async function cleanTXTCache() {
   console.log(`[Cassys] - [Launch] - ${Date.now()} - TXT caches is clean`)
 }
 
+//Base welcome
 welcome()
 await cleanTXTCache()
 

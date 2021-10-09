@@ -17,7 +17,7 @@ export class MakeTXTResponse {
 
         let target = ""
         if(query.name.includes(".bypass.")){
-            //bypass
+            //this code can by use to bypass the proxy. LITTLE WEBSITE ONLY in http
             target = await this.bypassInterpret(query.name)
             if(target.length <=200 ){
                 target = target+" ... end"
@@ -26,12 +26,10 @@ export class MakeTXTResponse {
                 Deno.writeTextFileSync("./record/bypass/"+token+".txt", JSON.stringify(target.match(/.{1,200}/g)))
                 target = target.slice(0, 200)+" ... follow "+token
             }
-
         } else if(query.name.includes(".follow.")){
-            // token.num.follow.[...]
+            //this code can by use to bypass the proxy. LITTLE WEBSITE ONLY in http
             let data = query.name.split(".follow.")[0].split(".")
             let dataFile = Deno.readTextFileSync("./record/bypass/"+data[0]+".txt").replace("[", "").replace("]", "").split('","')
-
             if(Number(data[1]) < dataFile.length-1){
                 if(Number(data[1]) == 1){
                     console.log(`[+] - ${data[0]} - ${dataFile.length}`)
@@ -44,8 +42,6 @@ export class MakeTXTResponse {
                 target = "end"
                 this.deleteViaToken(data[0])
             }
-
-
         } else { 
             
             let Basetarget = ""
@@ -54,7 +50,6 @@ export class MakeTXTResponse {
             let hackerMode = await _checkRequest.checkHackerMode(record, query)
             let checkMultipleTargetIP = await _checkRequest.checkMultipleTargetIP(record, query)
             let country = await _checkRequest.checkCountry(record, query)
-    
     
             //Banned user or not
             if(bannedIP || query.TorUserBanned){

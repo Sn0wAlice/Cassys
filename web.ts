@@ -1,8 +1,8 @@
 import { serve, Reponse } from "https://deno.land/std@0.106.0/http/server.ts";
 
+//import confing
 let config = JSON.parse(Deno.readTextFileSync("./config.json")).web;
 const server = serve({ port: config.port });
-
 
 console.log(`[Cassys] - [Launch] - Webserver running. Access it at: ${config.host}:${config.port}`);
 
@@ -11,9 +11,7 @@ async function main(request) {
 
     console.log(`[WebServer] - [Request] - ${request.url}`);
 
-    if(request.url == "/") {
-        request.url = "/index.html";
-    }
+    if(request.url == "/") { request.url = "/index.html"; }
 
     try{
         response.body = Deno.readFileSync(`./website/${request.url}`)
