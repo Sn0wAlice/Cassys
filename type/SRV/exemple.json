@@ -1,0 +1,12 @@
+{
+    "target": "voip.example.com",
+    "port": 80,
+    "balancer":[
+        {
+            "name": "Un nom de target",
+            "target": "voip.example.com",
+            "port": 80,
+            "proba": 5
+        }
+    ]
+}

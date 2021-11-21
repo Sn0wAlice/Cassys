@@ -1,36 +1,25 @@
-# Cassys <img src="./img/blackcurrant.png" height="50">
+# Cassys
 
-<img src="./img/cassys2.gif">
+<img src="./img/cassys.gif">
 
-*Working In early beta*
+*Working In early beta* ^_-
 
 # Record
 
-## Need to know
-
-### A record
-**HackerMode** > **Restrict By Ip** > **Restrict By Country**. So if a IP restriction affect response, Country restriction will be bypass. Same for HackerMode and Restric By Ip<br>
-Banned IP Will bypass ALL the filter :) *Logic*
-
-## Records
-
+## Infos
 > All the multiple target Are in beta testing __ONLY__
 
-All record exemple are in `./config/exemple.json` to copy past conf :) <br>
-Please consider use the API to add a new host
+All record exemple are in `./type/${TYPE_NAME}/exemple.json` to copy past conf :) <br>
 
 ## Database organisation
-The file architecture is: `config/gen/${HOSTNAME}/${SUB1}/${SUB2}/${TYPE}.json`<br>
+The file architecture is: `./db/${DOMAIN}/${HOSTNAME}/${SUB1}/${SUB2}/${TYPE}.json`<br>
 __Exemple__: 
 - testing.cassys.cnil.me / CNAME
-- `config/gen/cnil.me/cassys/testing/CNAME.json`
-
-### Record exeption
-In the code, `target` also contain the text reponse. For exemple target contain the TXT response!
+- `./db/me/cnil/cassys/testing/CNAME.json`
 
 # Record Support
 - A `beta`
-- AAAA `unstable`
+- AAAA `unstable` 0.o
 - CNAME `beta`
 - MX `beta`
 - NS `beta`
@@ -39,44 +28,33 @@ In the code, `target` also contain the text reponse. For exemple target contain 
 - TXT `beta`
 
 # Lauch the app
-## Args
 
-`deno run -A --unsable --no-check main.ts [ARGS]`
+`deno run -A --unsable --no-check dns.ts`
 
-### Starting
-- `--no-DNS`
-     - Don't start the DNS server (Port 6969)
-- `--no-WEB`
-     - Don't start the WEB server (Port in config.json)
-- `--no-API`
-     - Don't start the API server (Port in config.json)
+# Network Special layers
 
-### DNS
-- `--debug`
-     - Activate the debug mode
-- `--countryForce`
-     - Force user to pass by country restriction
+## - DNS tunneling
 
+- The client is in `./clients/tunneling/main.ts`<br>
+- Configure the client <br>
+- Connect your proxy of firefox on it:<br>
+<img src="./img/dns_tun.png"><br>
 
-# API
-You need to config the `api/conf.json` file. Use the exemple file to create it.
+> And tada, it's working ! 0.o
 
-> Manage your database via the API is realy easy but ***CREATE A STRONG AUTH KEY***
+## - Chat
+- The client is in `./clients/chat/main.js`<br>
+- Install deps with `npm i`<br>
+- Configure the client <br>
+- `node client.js`<br>
+<img src="./img/dns_chat.png"><br>
 
-| URL | action | exemple |
-| :--- | :---- | :----- |
-| /add | add a new host | api/exemple/add.js |
-| /remove | remove a host | api/exemple/remove.js |
+> Beta project. But working. Please wait for update ^.-
 
-# Devil infos
-<img src="./img/skull.gif"  height="250">
+# Copy Past Zone
 
 ## Github Page Conf: 
 ```
 EXAMPLE.COM     3600    IN A        185.199.108.153
 EXAMPLE.COM     3600    IN AAAA     2606:50c0:8000::153
 ```
-
-# TODO
-
-- local network system

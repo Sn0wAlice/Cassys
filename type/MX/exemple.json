@@ -1,0 +1,12 @@
+{
+    "target": "IP-DES",
+    "ttl": 1111,
+    "balancer":[
+        {
+            "name": "Un nom de target",
+            "target": "IP-DES",
+            "ttl": 1111,
+            "proba": 5
+        }
+    ]
+}

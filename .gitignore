@@ -1,8 +1,13 @@
-/utils/torNodes.txt
-/config/*.json
-/config/gen/*
-/api/conf.json
-/record/bypass/*.txt
+db/*
+!db/notEmpty
+!db/exemple.json
 
-!/config/gen/.notEmpty
-!/config/exemple.json
+tmp/bypass/*
+tmp/chat/*
+
+!tmp/bypass/notEmpty
+!tmp/chat/notEmpty
+
+clients/chat/node_modules/*
+
+

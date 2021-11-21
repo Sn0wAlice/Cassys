@@ -1,0 +1,10 @@
+{
+    "target": "DOMAIN-DES",
+    "balancer":[
+        {
+            "name": "Un nom de target",
+            "target": "DOMAIN-DES",
+            "proba": 5
+        }
+    ]
+}

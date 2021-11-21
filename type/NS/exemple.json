@@ -1,0 +1,10 @@
+{
+    "target": "ns.example.com",
+    "balancer":[
+        {
+            "name": "Un nom de target",
+            "target": "ns.example.com",
+            "proba": 5
+        }
+    ]
+}

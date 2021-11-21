@@ -1,0 +1,51 @@
+[
+    {
+        "name": "A Record",
+        "type": "A",
+        "morpheus": "qsd",
+        "description": "DNS type A",
+        "file_location": "A/"
+    },{
+        "name": "CNAME Record",
+        "type": "CNAME",
+        "morpheus": "qsd",
+        "description": "DNS type CNAME",
+        "file_location": "CNAME/"
+    },{
+        "name": "TXT Record",
+        "type": "TXT",
+        "morpheus": "qsd",
+        "description": "DNS type TXT",
+        "file_location": "TXT/"
+    },{
+        "name": "AAAA Record",
+        "type": "AAAA",
+        "morpheus": "qsd",
+        "description": "DNS type AAAA",
+        "file_location": "AAAA/"
+    },{
+        "name": "NS Record",
+        "type": "NS",
+        "morpheus": "qsd",
+        "description": "DNS type NS",
+        "file_location": "NS/"
+    },{
+        "name": "MX Record",
+        "type": "MX",
+        "morpheus": "qsd",
+        "description": "DNS type MX",
+        "file_location": "MX/"
+    },{
+        "name": "SOA Record",
+        "type": "SOA",
+        "morpheus": "qsd",
+        "description": "DNS type SOA",
+        "file_location": "SOA/"
+    },{
+        "name": "SRV Record",
+        "type": "SRV",
+        "morpheus": "qsd",
+        "description": "DNS type SRV",
+        "file_location": "SRV/"
+    }
+] 
