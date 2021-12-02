@@ -4,6 +4,12 @@ const { exec } = require("child_process");
 
 const interface = createInterface(process.stdin, process.stdout)
 
+/**
+This is the IP / Domain of a Cassys DNS server
+*/
+const HOSTNAME = "127.0.0.1"
+const port = 6969; // default Cassys Port
+
 function init() {
     process.stdout.write("\x1Bc");
     console.log(Array(process.stdout.rows + 1).join("\n"));
@@ -43,19 +49,16 @@ async function main() {
     }
 }
 
-//configure me
-const hostname = "@127.0.0.1 -p 6969"
-
 function sendMessage(message){
     message = message.replace(/ /g, "o.o");
     let tmp = message+"_"+"test"+"_"+"new";
-    exec(`dig ${hostname} ${tmp}njbhj.morpheus.cnil.me +short TXT`, (error, stdout, stderr) => { });
+    exec(`dig @${HOSTNAME} -p ${port} ${tmp}njbhj.morpheus.cnil.me +short TXT`, (error, stdout, stderr) => { });
 }
 
 
 function checkForUpdates(date) {
     let tmp = date+"_"+"test"+"_"+"check";
-    exec(`dig ${hostname} ${tmp}njbhj.morpheus.cnil.me +short TXT`, (error, stdout, stderr) => {
+    exec(`dig @${HOSTNAME} -p ${port} ${tmp}njbhj.morpheus.cnil.me +short TXT`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
@@ -77,7 +80,7 @@ function checkForUpdates(date) {
 
 function getnext(token){
     let tmp = token+"_"+"test"+"_"+"getnext";
-    exec(`dig ${hostname} ${tmp}njbhj.morpheus.cnil.me +short TXT`, (error, stdout, stderr) => {
+    exec(`dig @${HOSTNAME} -p ${port} ${tmp}njbhj.morpheus.cnil.me +short TXT`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;

@@ -19,6 +19,13 @@ import { serve, Response } from "https://deno.land/std@0.106.0/http/server.ts";
 const config =  { port: 6666 }
 const server = serve({ port: config.port });
 
+
+/**
+This is the IP / Domain of a Cassys DNS server
+*/
+const HOSTNAME = "127.0.0.1"
+const port = 6969; // default Cassys Port
+
 console.log(`Client started on port ${config.port}`);
 async function main(request:any) {
     let response: Response = {}
@@ -148,15 +155,12 @@ async function makeTheRequest(token, count){
 }
 */
 
-//CONFIGURE THIS
-const hostname = "@127.0.0.1 -p 6969"
-
 function makeRequestFollow(token:string, nb:number){
-    return `dig ${hostname} ${token}.${nb}.tf.cassys.cnil.me TXT +short`
+    return `dig @${HOSTNAME} ${token}.${nb}.tf.cassys.cnil.me TXT +short -p ${port}`
 }
 
 function makeRequest(url:string, type:string, method:string){
-    return `dig ${hostname} ${type}.${url.replace(/\./g, '7rlf').replace(/\//g, '6euf')}.tb.cassys.cnil.me TXT +short`
+    return `dig @${HOSTNAME} ${type}.${url.replace(/\./g, '7rlf').replace(/\//g, '6euf')}.tb.cassys.cnil.me TXT +short -p ${port}`
 }
 
 function numberArray(arrayA){

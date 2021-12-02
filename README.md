@@ -36,7 +36,7 @@ __Exemple__:
 ## - DNS tunneling
 
 - The client is in `./clients/tunneling/main.ts`<br>
-- Configure the client <br>
+- Configure the client (Hostname + Port)<br>
 - Connect your proxy of firefox on it:<br>
 <img src="./img/dns_tun.png"><br>
 
@@ -45,7 +45,7 @@ __Exemple__:
 ## - Chat
 - The client is in `./clients/chat/main.js`<br>
 - Install deps with `npm i`<br>
-- Configure the client <br>
+- Configure the client (Hostname + Port)<br>
 - `node client.js`<br>
 <img src="./img/dns_chat.png"><br>
 
