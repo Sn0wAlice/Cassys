@@ -11,6 +11,13 @@
 
 All record exemple are in `./type/${TYPE_NAME}/exemple.json` to copy past conf :) <br>
 
+### Cassys port
+Cassys **DO NOT** use port **53** like classic DNS, but port **6969**, consider use this command (with your config): 
+```
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 53 -j REDIRECT --to-port 6969
+sudo iptables -t nat -A PREROUTING -i eth0 -p udp --dport 53 -j REDIRECT --to-port 6969
+```
+
 ## Database organisation
 The file architecture is: `./db/${DOMAIN}/${HOSTNAME}/${SUB1}/${SUB2}/${TYPE}.json`<br>
 __Exemple__: 
