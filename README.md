@@ -9,7 +9,7 @@
 ## Infos
 > All the multiple target Are in beta testing __ONLY__
 
-All record exemple are in `./type/${TYPE_NAME}/exemple.json` to copy past conf :) <br>
+All record exemples are in `./type/${TYPE_NAME}/exemple.json` to copy past conf :) <br>
 
 ### Cassys port
 Cassys **DO NOT** use port **53** like classic DNS, but port **6969**, consider use this command (with your config): 
@@ -44,7 +44,7 @@ __Exemple__:
 
 - The client is in `./clients/tunneling/main.ts`<br>
 - Configure the client (Hostname + Port)<br>
-- Connect your proxy of firefox on it:<br>
+- Connect your proxy of Firefox on it:<br>
 <img src="./img/dns_tun.png"><br>
 
 > And tada, it's working ! 0.o
