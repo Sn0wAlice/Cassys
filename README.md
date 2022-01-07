@@ -4,6 +4,8 @@
 
 *Working In early beta* ^_-
 
+[Open the wiki page](https://github.com/Sn0wAlice/Cassys/wiki)
+
 # Record
 
 ## Infos
