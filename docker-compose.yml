@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+    deno:
+        container_name: cassys
+        image: deno
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: cassys
+        ports:
+            - "53:6969" 

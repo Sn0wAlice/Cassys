@@ -20,6 +20,8 @@ sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 53 -j REDIRECT --to-po
 sudo iptables -t nat -A PREROUTING -i eth0 -p udp --dport 53 -j REDIRECT --to-port 6969
 ```
 
+> For Docker: you will need to enter the root password
+
 ## Database organisation
 The file architecture is: `./db/${DOMAIN}/${HOSTNAME}/${SUB1}/${SUB2}/${TYPE}.json`<br>
 __Exemple__: 
