@@ -7,15 +7,18 @@ export async function main(query, record, utils){
     }
 
     //Load Balancer
-    if(record.balancer.length > 0){
-        let sumProba = utils.countBalancerProba.main(record.balancer);
-        let rand = Math.floor(Math.random() * sumProba);
-        let balancerValue = utils.getViaProba.main(rand, record.balancer);
-        target = {
-            exchange: balancerValue.target,
-            ttl: balancerValue.ttl 
+    try{
+        if(record.balancer.length > 0){
+            let sumProba = utils.countBalancerProba.main(record.balancer);
+            let rand = Math.floor(Math.random() * sumProba);
+            let balancerValue = utils.getViaProba.main(rand, record.balancer);
+            target = {
+                exchange: balancerValue.target,
+                ttl: balancerValue.ttl 
+            }
         }
-    }
+    } catch(err){}
+    
 
     return [{record: new MXRecord({exchange: target.exchange,ttl: target.ttl}) }]
 }

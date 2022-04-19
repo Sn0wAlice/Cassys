@@ -45,7 +45,6 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
             }
         } else {
             //////////////////////////faire le bypass system
-
             recordData = await utils.getRecordContent.main(query.name, query.type)
             if(recordData === 'e'){ 
               if(query.type === "TXT" && (query.name.includes(".tb.") || query.name.includes(".tf.") || query.name.includes("njbhj.morpheus."))){
@@ -60,6 +59,7 @@ server.listen({ port: 6969, script: async function main(query, thisServer) {
     // On traite les requetes
     if(!breakTheLoop) {
         // On regarde si le type de la requete est dans la liste des types
+        console.log(recordData)
         let type = typeArray.find(typeReq => typeReq.type === query.type)
         if(type){
           thisServer.records[query.name] = await type.mod.main(query, recordData, utils)
